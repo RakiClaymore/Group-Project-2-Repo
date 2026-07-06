@@ -58,3 +58,17 @@ class Trie:
             last_branch = curr
         # Return last_branch
         return last_branch
+    
+    def get_words(self, branch_node, results):
+        # If branch_node is None, return
+        if not branch_node:
+            return
+        # If the curr node is the end of a word, add the word to results
+        if branch_node.isEndofWord:
+            results.append(branch_node.word)
+        # Iterate through each child of the curr node
+        for child in branch_node.children:
+            # If the child is not None, recursively call get_words on the child
+            if child:
+                self.get_words(child, results)
+        
