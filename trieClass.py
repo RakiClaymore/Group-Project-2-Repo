@@ -61,7 +61,7 @@ class Trie:
     
     def get_words(self, branch_node, results):
         # If branch_node is None, return
-        if not branch_node:
+        if branch_node is None:
             return
         # If the curr node is the end of a word, add the word to results
         if branch_node.isEndofWord:
@@ -72,3 +72,18 @@ class Trie:
             if child:
                 self.get_words(child, results)
         
+    def get_rhymes(self, word):
+        # Find the last branch node for the given word
+        last_branch = self.find_last_branch_node(word)
+        # If last_branch is None, return an empty list
+        if last_branch is None:
+            return []
+        # Create a list to hold the results
+        results = []
+        # Get all the words that rhyme/have the same ending as the given word
+        self.get_words(last_branch, results)
+        # Remove the original word from the results if it is in the list
+        if word.lower() in results:
+            results.remove(word.lower())
+        # Return the results
+        return results
