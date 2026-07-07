@@ -13,11 +13,9 @@ class Trie:
         # Point to the root
         curr = self.root
         # Save the original word
-        originalWord = word
-        # Make the word lowercase
-        lower_word = word.lower()
+        originalWord = word.lower()
         # Reverse the word (this way finding the ends of words that match will be easier to determine words that rhyme)
-        reversed_word = lower_word[::-1]
+        reversed_word = originalWord[::-1]
         # Iterate through each character in word
         for char in reversed_word:
             # Check if character is already in the Trie
@@ -76,7 +74,7 @@ class Trie:
         # Find the last branch node for the given word
         last_branch = self.find_last_branch_node(word)
         # If last_branch is None, return an empty list
-        if last_branch is None:
+        if last_branch is None or last_branch == self.root:
             return []
         # Create a list to hold the results
         results = []
