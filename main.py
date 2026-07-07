@@ -5,7 +5,7 @@ import time
 def main():
     # Test
     # Create a new Trie
-    trie_start = time.time()
+    trie_start = time.perf_counter()
     trie = Trie()
     # Insert
     trie.insert("cat")
@@ -16,15 +16,13 @@ def main():
     trie.insert("station")
     trie.insert("nation")
     trie.insert("ration")
-    # Find last branch node
-    last_branch = trie.find_last_branch_node("cat")
     # Get words
     results = []
-    trie.get_words(last_branch, results)
+    results = trie.get_rhymes("cat")
     # Print
     print("Words that rhyme with 'cat' or share the same ending: " + str(results))
-    trie_end = time.time()
-    print(f"Execution time: {trie_end - trie_start} seconds")
+    trie_end = time.perf_counter()
+    print(f"Execution time: {trie_end - trie_start:.8f} seconds")
 
 if __name__ == "__main__":
     main()
