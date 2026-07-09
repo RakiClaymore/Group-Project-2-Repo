@@ -1,5 +1,6 @@
 from trieClass import Trie
 import time
+import json
 
 # Function to display the menu
 def menu():
@@ -23,27 +24,13 @@ def loading(text, dots = 4):
     print("\n")
 
 def main():
-    # Test
-    # Create a new Trie
-    trie_start = time.perf_counter()
-    trie = Trie()
-    # Insert
-    trie.insert("cat")
-    trie.insert("bat")
-    trie.insert("rat")
-    trie.insert("mat")
-    trie.insert("boat")
-    trie.insert("station")
-    trie.insert("nation")
-    trie.insert("ration")
-    # Get words
-    results = []
-    results = trie.get_rhymes("cat")
-    # Print
-    print("Words that rhyme with 'cat' or share the same ending: " + str(results))
-    trie_end = time.perf_counter()
-    print(f"Execution time: {trie_end - trie_start:.8f} seconds")
+    with open("dictionary.json", "r") as file:
+        dictionary = json.load(file)
 
+    trie = Trie()
+    for word in dictionary:
+        trie.insert(word)
+    
     # Set up variables
     trie_rhyme = Trie()
     trie_results = []
