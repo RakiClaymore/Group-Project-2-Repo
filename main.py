@@ -33,7 +33,6 @@ def main():
         trie.insert(word)
     
     # Set up variables
-    trie_rhyme = Trie()
     trie_results = []
 
     # While loop to guide users through the menu
@@ -49,13 +48,20 @@ def main():
                 if not rhyme_word.isalpha():
                     raise ValueError
 
-                loading(f"Scanning database for words that rhyme with '{rhyme_word}'")
+                loading(f"\nScanning database for words that rhyme with '{rhyme_word}'")
                 start_trie = time.perf_counter()
                 trie.insert(rhyme_word)
                 trie_results = trie.get_rhymes(rhyme_word)
-                print(f"Here are the words we found that rhyme with '{rhyme_word}': {str(trie_results)}")
+                print(f"Here are the words we found that rhyme with '{rhyme_word}': ")
+
+                columns = 4
+                for i, word in enumerate(trie_results):
+                    print(f"{i+1:>3}) {word:<18}", end="")
+                    if (i + 1) % columns == 0:
+                        print()
+
                 end_trie = time.perf_counter()
-                print(f"This search took {end_trie-start_trie:.8f} seconds.")
+                print(f"\n\nThis search took {end_trie-start_trie:.8f} seconds.")
 
             except ValueError:
                 print("Error. Please input a valid word.")
@@ -71,15 +77,22 @@ def main():
                 if not rhyme_word.isalpha():
                     raise ValueError
 
-                loading(f"Scanning database for words that rhyme with '{rhyme_word}'")
+                loading(f"\nScanning database for words that rhyme with '{rhyme_word}'")
                 print("-" * 70)
                 print("Results from Trie: ")
                 start_trie = time.perf_counter()
                 trie.insert(rhyme_word)
                 trie_results = trie.get_rhymes(rhyme_word)
-                print(f"Here are the words we found that rhyme with '{rhyme_word}': {str(trie_results)}")
+                print(f"Here are the words we found that rhyme with '{rhyme_word}': ")
+
+                columns = 4
+                for i, word in enumerate(trie_results):
+                    print(f"{i+1:>3}) {word:<18}", end="")
+                    if (i + 1) % columns == 0:
+                        print()
+
                 end_trie = time.perf_counter()
-                print(f"This search took {end_trie - start_trie:.8f} seconds.\n")
+                print(f"\nThis search took {end_trie - start_trie:.8f} seconds.\n")
 
                 print("-" * 70)
                 print("Results from Hash Map: ")
