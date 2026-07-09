@@ -7,6 +7,7 @@ def menu():
     print("\n")
     print("-" * 70)
     print("Welcome to Prime Rhyme, where we can help you find ways to rhyme!")
+    print("Please note that this program searches for rhymes based on shared suffixes, so rhymes may not be perfect.")
     print("-" * 70)
     print("1. Run Rhymes with Trie")
     print("2. Run Rhymes with Hash Map")
