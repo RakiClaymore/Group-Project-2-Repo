@@ -18,6 +18,9 @@ class Trie:
         reversed_word = originalWord[::-1]
         # Iterate through each character in word
         for char in reversed_word:
+            # Check if char is a letter from a-z and ignore if not
+            if not char.isalpha():
+                continue
             # Check if character is already in the Trie
             index = ord(char) - ord('a')
             # If not, create a new node
