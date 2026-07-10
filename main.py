@@ -1,3 +1,4 @@
+from hash_done import HashMap
 from trieClass import Trie
 import time
 import json
@@ -29,8 +30,10 @@ def main():
         dictionary = json.load(file)
 
     trie = Trie()
+    hash = HashMap()
     for word in dictionary:
         trie.insert(word)
+        hash.insert(word)
     
     # Set up variables
     trie_results = []
@@ -64,11 +67,32 @@ def main():
                 print(f"\n\nThis search took {end_trie-start_trie:.8f} seconds.")
 
             except ValueError:
-                print("Error. Please input a valid word.")
+                print("Error. Please input a valid word.\n")
 
         elif user_choice == "2":
-            # Rhyme with Hash Map
-            continue
+            try:
+                rhyme_word = input("Please input word to rhyme: ")
+                # Ensure the input is an actual word
+                if not rhyme_word.isalpha():
+                    raise ValueError
+
+                loading(f"\nScanning database for words that rhyme with '{rhyme_word}'")
+                start_hash = time.perf_counter()
+                hash.insert(rhyme_word)
+                hash_results = hash.get_rhymes(rhyme_word)
+                print(f"Here are the words we found that rhyme with '{rhyme_word}': ")
+
+                columns = 4
+                for i, word in enumerate(hash_results):
+                    print(f"{i + 1:>3}) {word:<18}", end="")
+                    if (i + 1) % columns == 0:
+                        print()
+
+                end_hash = time.perf_counter()
+                print(f"\n\nThis search took {end_hash - start_hash:.8f} seconds.\n")
+
+            except ValueError:
+                print("Error. Please input a valid word.")
 
         elif user_choice == "3":
             try:
@@ -96,10 +120,22 @@ def main():
 
                 print("-" * 70)
                 print("Results from Hash Map: ")
-                # Rhyme with Hash Map
+                start_hash = time.perf_counter()
+                hash.insert(rhyme_word)
+                hash_results = hash.get_rhymes(rhyme_word)
+                print(f"Here are the words we found that rhyme with '{rhyme_word}': ")
+
+                columns = 4
+                for i, word in enumerate(hash_results):
+                    print(f"{i + 1:>3}) {word:<18}", end="")
+                    if (i + 1) % columns == 0:
+                        print()
+
+                end_hash = time.perf_counter()
+                print(f"\nThis search took {end_hash - start_hash:.8f} seconds.\n")
 
             except ValueError:
-                print("Error. Please input a valid word.")
+                print("Error. Please input a valid word.\n")
 
         elif user_choice == "4":
             print("\nThank you for using Prime Rhyme! Please come again soon. :)")
