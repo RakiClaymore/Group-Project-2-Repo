@@ -60,7 +60,8 @@ class HashMap:
             if self.load_factor > self.MAX_LOAD_FACTOR:
                 self._resize()
         else:
-            entry[1].append(word)
+            if word not in entry[1]:
+                entry[1].append(word)
 
     def _get(self, key):
         index = self._bucket_index(key)
@@ -109,10 +110,6 @@ class HashMap:
             words = self._get(suffix)
             if words is None:
                 continue
-
-
-
-
 
             if any(candidate != lower_word for candidate in words):
                 return suffix
@@ -163,65 +160,3 @@ class HashMap:
             f"HashMap(capacity={self.capacity}, size={self.size}, "
             f"load_factor={self.load_factor:.2f})"
         )
-
-if __name__ == "__main__":
-    import time
-
-    print("=" * 70)
-    print("Demo 1: basic insert + rhyme lookup")
-    print("=" * 70)
-    hm = HashMap()
-    test_words = ["cat", "hat", "bat", "flat", "dog", "log", "frog", "through", "cough"]
-
-    start = time.perf_counter()
-    for w in test_words:
-        hm.insert(w)
-    end = time.perf_counter()
-    print(f"Inserted {len(test_words)} words in {end - start:.8f} seconds")
-    print(f"stats(): {hm.stats()}")
-    print(f"repr(): {hm!r}")
-    print(f"len(): {len(hm)} distinct suffix keys")
-
-    for query in ["cat", "dog", "through"]:
-        start = time.perf_counter()
-        rhymes = hm.get_rhymes(query)
-        end = time.perf_counter()
-        print(f"Rhymes for '{query}': {rhymes}  ({end - start:.8f} sec)")
-
-    print("\n" + "=" * 70)
-    print("Demo 2: messy/edge-case input (mirrors what a user might type)")
-    print("=" * 70)
-    edge_cases = ["Cat!", "h@t", "  Bat  ", "123", "", "flat-out", "FROG"]
-    for w in edge_cases:
-        try:
-            hm.insert(w)
-            print(f"insert({w!r}) -> ok")
-        except TypeError as e:
-            print(f"insert({w!r}) -> TypeError: {e}")
-    print(f"Rhymes for 'cat' after messy inserts: {hm.get_rhymes('cat')}")
-
-    try:
-        hm.insert(42)
-    except TypeError as e:
-        print(f"insert(42) correctly rejected -> TypeError: {e}")
-
-    print("\n" + "=" * 70)
-    print("Demo 3: forcing a resize with a larger batch")
-    print("=" * 70)
-    hm2 = HashMap()
-    import random
-    import string
-
-    random.seed(0)
-    bulk_words = [
-        "".join(random.choice(string.ascii_lowercase) for _ in range(random.randint(3, 8)))
-        for _ in range(500)
-    ]
-    before_capacity = hm2.capacity
-    start = time.perf_counter()
-    for w in bulk_words:
-        hm2.insert(w)
-    end = time.perf_counter()
-    print(f"Inserted {len(bulk_words)} random words in {end - start:.6f} sec")
-    print(f"Capacity grew from {before_capacity} to {hm2.capacity} via automatic rehashing")
-    print(f"stats(): {hm2.stats()}")
