@@ -55,6 +55,7 @@ def main():
                 start_trie = time.perf_counter()
                 trie.insert(rhyme_word)
                 trie_results = trie.get_rhymes(rhyme_word)
+                trie_results.sort()
                 print(f"Here are the words we found that rhyme with '{rhyme_word}': ")
 
                 columns = 4
@@ -80,6 +81,7 @@ def main():
                 start_hash = time.perf_counter()
                 hash.insert(rhyme_word)
                 hash_results = hash.get_rhymes(rhyme_word)
+                hash_results.sort()
                 print(f"Here are the words we found that rhyme with '{rhyme_word}': ")
 
                 columns = 4
@@ -107,6 +109,7 @@ def main():
                 start_trie = time.perf_counter()
                 trie.insert(rhyme_word)
                 trie_results = trie.get_rhymes(rhyme_word)
+                trie_results.sort()
                 print(f"Here are the words we found that rhyme with '{rhyme_word}': ")
 
                 columns = 4
@@ -123,6 +126,7 @@ def main():
                 start_hash = time.perf_counter()
                 hash.insert(rhyme_word)
                 hash_results = hash.get_rhymes(rhyme_word)
+                hash_results.sort()
                 print(f"Here are the words we found that rhyme with '{rhyme_word}': ")
 
                 columns = 4
